@@ -1,7 +1,15 @@
-var token = '310261343:AAHHY3cnX9cVMqJxAyasVlWwTJaOlykli6E';
+var token = process.env.TOKEN;
 
-var Bot = require('node-telegram-bot-api'),
-    bot = new Bot(token, { polling: true });
+var Bot = require('node-telegram-bot-api');
+var bot;
+
+if(process.env.NODE_ENV === 'production') {
+  bot = new Bot(token);
+  bot.setWebHook(process.env.HEROKU_URL + bot.token);
+}
+else {
+  bot = new Bot(token, { polling: true });
+}
 
 console.log('bot server started...');
 
@@ -23,3 +31,5 @@ bot.onText(/^\/sum((\s+\d+)+)$/, function (msg, match) {
     // reply sent!
   });
 });
+
+module.exports = bot;
