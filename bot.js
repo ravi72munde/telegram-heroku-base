@@ -5,7 +5,13 @@ var bot;
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
+<<<<<<< HEAD
   bot.setWebHook(process.env.HEROKU_URL + bot.token);
+=======
+
+  bot.setWebHook("https://mo-map-telegram-base.herokuapp.com/" + bot.token);
+
+>>>>>>> origin/develop-ravi
   console.log('environment url->>>'+process.env.HEROKU_URL);
 }
 else {
