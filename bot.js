@@ -5,7 +5,8 @@ var bot;
 
 if(process.env.NODE_ENV === 'production') {
   bot = new Bot(token);
-  bot.setWebHook(process.env.HEROKU_URL + bot.token);
+  bot.setWebHook("https://mo-map-telegram-base.herokuapp.com" + bot.token);
+  console.log('environment url->>>'+process.env.HEROKU_URL);
 }
 else {
   bot = new Bot(token, { polling: true });
