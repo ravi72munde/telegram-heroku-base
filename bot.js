@@ -8,18 +8,34 @@ if(process.env.NODE_ENV === 'production') {
   bot.setWebHook(process.env.HEROKU_URL + bot.token);
   console.log('environment url->>>'+process.env.HEROKU_URL);
 }
-else {
+else{
   bot = new Bot(token, { polling: true });
 }
 
 console.log('bot server started...');
 
-// hello command
-bot.onText(/^\/say_hello (.+)$/, function (msg, match) {
-  var name = match[1];
-  bot.sendMessage(msg.chat.id, 'Hello ' + name + '!').then(function () {
-    // reply sent!
-  });
+bot.onText(/\/start/, (msg) => {
+        var keys = [];
+        keys.push({"text":"1","callback_data":"1"});
+        keys.push({"text":"2","callback_data":"2"});
+        keys.push({"text":"3","callback_data":"3"});
+        keys.push({"text":"4","callback_data":"4"});
+        keys.push({"text":"5","callback_data":"5"});
+
+        bot.sendMessage(msg.chat.id, "Are you feeling ok?", {
+                "parse_mode":"Markdown",
+                 "reply_markup": {
+                         "inline_keyboard": [keys]
+                }
+        });
+
+});
+
+
+bot.on("callback_query", (callbackQuery) => {
+    const msg = callbackQuery.message;
+    bot.answerCallbackQuery(callbackQuery.id)
+       .then(() => bot.sendMessage(msg.chat.id,callbackQuery.data ));
 });
 
 // sum command
