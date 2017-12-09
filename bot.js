@@ -17,7 +17,7 @@ else
 
 console.log('bot server started...');
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/rate_me/, (msg) => {
         var keys = [];
         keys.push({"text":"1","callback_data":"1"});
         keys.push({"text":"2","callback_data":"2"});
@@ -31,6 +31,14 @@ bot.onText(/\/start/, (msg) => {
                          "inline_keyboard": [keys]
                 }
         });
+
+});
+
+bot.onText(/\/get_my_id/, (msg) => {
+        console.log(JSON.stringify(msg));
+        bot.sendMessage(msg.chat.id, "your user id :"+msg.from.id).then(function () {
+    // reply sent!
+  });
 
 });
 
